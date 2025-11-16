@@ -161,6 +161,19 @@ function displayResults(colleges) {
         return;
     }
 
+    // Calculate min and max scores for percentage scaling (1-100%)
+    const scores = colleges.map(c => c.HybridScore);
+    const minScore = Math.min(...scores);
+    const maxScore = Math.max(...scores);
+    const scoreRange = maxScore - minScore;
+    
+    // Function to convert score to percentage (1-100%)
+    const toPercentage = (score) => {
+        if (scoreRange === 0) return 100; // If all scores are the same, show 100%
+        // Scale to 1-100% range, with top score = 100%, lowest = 1%
+        return Math.round(((score - minScore) / scoreRange) * 99 + 1);
+    };
+
     let html = '';
     
     // Add scroll hint if more than 3 results
@@ -203,7 +216,7 @@ function displayResults(colleges) {
                 </div>
                 <div class="stat">
                     <div class="stat-label">Match Score</div>
-                    <div class="stat-value" style="color: #007aff;">${college.HybridScore.toFixed(2)}</div>
+                    <div class="stat-value" style="color: #007aff;">${toPercentage(college.HybridScore)}%</div>
                 </div>
             </div>
         </div>
