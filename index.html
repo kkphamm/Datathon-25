@@ -76,22 +76,32 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="checkbox-label" style="display: flex; align-items: center; padding: 0.75rem; background: #f0f7ff; border-radius: 6px; border: 1px solid #007aff33;">
-                            <input type="checkbox" id="focusPell" style="margin-right: 0.75rem; width: 18px; height: 18px;">
-                            <span style="font-weight: 500; color: #007aff;">🎯 Focus on Pell Grant Student Success</span>
+                        <label class="toggle-container" for="focusPell">
+                            <div class="toggle-wrapper">
+                                <div class="toggle-label-text">
+                                    <strong>Focus on Pell Grant Student Success</strong>
+                                    <p>Prioritize colleges with strong outcomes for Pell Grant recipients</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="focusPell">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </div>
                         </label>
-                        <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; line-height: 1.4;">
-                            Prioritize colleges with strong outcomes for Pell Grant recipients, emphasizing graduation rates and affordability for low-income students.
-                        </p>
                     </div>
 
-                    <button type="submit">Get Recommendations</button>
+                    <button type="submit" id="submitBtn">
+                        <span class="button-text">Get Recommendations</span>
+                    </button>
                 </form>
             </div>
 
             <div class="card results">
                 <h2>Your Recommendations</h2>
-                <div id="loading">Finding your perfect matches...</div>
+                <div id="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Finding your perfect matches...</div>
+                </div>
                 <div id="results"></div>
             </div>
         </div>
@@ -99,42 +109,58 @@
     </div>
 
     <!-- Tableau section - full width outside container -->
-    <div class="tableau-wrapper">
-        <div class="card tableau-section">
-            <h2>📊 Interactive Dashboards</h2>
-            <p>Explore your recommendations visually with maps and charts</p>
+    <div class="tableau-wrapper scroll-reveal">
+        <div class="tableau-section">
+            <div class="tableau-header">
+                <h2>Interactive Dashboards</h2>
+                <p class="tableau-subtitle">Explore your college matches through data visualization</p>
+            </div>
             
             <!-- Dashboard 1: Map & Distribution -->
-            <div style="margin-bottom: 2rem;">
-                <h3 style="color: #1a1a1a; font-size: 1.25rem; margin-bottom: 0.5rem;">📍 College Map & Distribution</h3>
-                <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">Geographical overview of your recommendations</p>
-                <iframe 
-                    id="tableau-dashboard-1"
-                    src="https://public.tableau.com/views/ProccessedBook/Dashboard1?:language=en-US&:embed=y&:display_count=n&:showVizHome=no"
-                    width="100%"
-                    height="900px"
-                    frameborder="0"
-                    style="border: none;">
-                </iframe>
+            <div class="dashboard-container">
+                <div class="dashboard-intro">
+                    <h3>College Map & Distribution</h3>
+                    <p>Geographic overview of your recommendations</p>
+                </div>
+                <div class="iframe-wrapper">
+                    <iframe 
+                        id="tableau-dashboard-1"
+                        src="https://public.tableau.com/views/ProccessedBook/Dashboard1?:language=en-US&:embed=y&:display_count=n&:showVizHome=no"
+                        height="900px"
+                        frameborder="0"
+                        style="border: none;">
+                    </iframe>
+                </div>
             </div>
             
             <!-- Dashboard 2: Your Top N Analysis -->
-            <div>
-                <h3 style="color: #1a1a1a; font-size: 1.25rem; margin-bottom: 0.5rem;">📊 Your Top N Analysis</h3>
-                <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">
-                    Detailed breakdown of <strong>your specified top N</strong> colleges:<br>
-                    • <strong>Ranking Bar Chart</strong> – Final match scores sorted by rank (colored by region)<br>
-                    • <strong>MSI Community Breakdown</strong> – Which schools serve minority communities?<br>
-                    • <strong>At-a-Glance Comparison</strong> – Net Price, Grad Rate, and Retention side-by-side
-                </p>
-                <iframe 
-                    id="tableau-dashboard-2"
-                    src="https://public.tableau.com/views/ProccessedBook/Dashboard2?:language=en-US&:embed=y&:display_count=n&:showVizHome=no"
-                    width="100%"
-                    height="900px"
-                    frameborder="0"
-                    style="border: none;">
-                </iframe>
+            <div class="dashboard-container">
+                <div class="dashboard-intro">
+                    <h3>Your Top Results Analysis</h3>
+                    <div class="dashboard-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">📊</span>
+                            <span>Match scores ranked by region</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎓</span>
+                            <span>MSI community breakdown</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💰</span>
+                            <span>Cost and outcomes comparison</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="iframe-wrapper">
+                    <iframe 
+                        id="tableau-dashboard-2"
+                        src="https://public.tableau.com/views/ProccessedBook/Dashboard2?:language=en-US&:embed=y&:display_count=n&:showVizHome=no"
+                        height="900px"
+                        frameborder="0"
+                        style="border: none;">
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
