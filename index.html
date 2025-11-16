@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Recommender | Find Your Perfect Match</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="index.html" class="nav-brand">🎓 College Recommender</a>
+            <a href="about.html" class="nav-link">About This Tool</a>
+        </nav>
+
+        <div class="header">
+            <h1>Find Your Perfect College Match</h1>
+            <p>Data-driven recommendations based on what matters most to you</p>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <form id="recommendForm">
+                    <div class="control-group">
+                        <label>Maximum Net Price: <span class="value" id="priceValue">$25,000</span></label>
+                        <input type="range" id="maxPrice" min="5000" max="50000" step="1000" value="25000">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Minimum Graduation Rate: <span class="value" id="gradValue">40%</span></label>
+                        <input type="range" id="minGrad" min="0" max="100" step="5" value="40">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Minimum Retention Rate: <span class="value" id="retentionValue">70%</span></label>
+                        <input type="range" id="minRetention" min="0" max="100" step="5" value="70">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Number of Results: <span class="value" id="topNValue">10</span></label>
+                        <input type="range" id="topN" min="5" max="20" step="1" value="10">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Preferred State (Optional):</label>
+                        <select id="state">
+                            <option value="">Any State</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Minority-Serving Institution Preferences:</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="HSI"> HSI
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="PBI"> PBI
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="HBCU"> HBCU
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="AANAPII"> AANAPII
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="ANNHI"> ANNHI
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="TRIBAL"> TRIBAL
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="NANTI"> NANTI
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="checkbox-label" style="display: flex; align-items: center; padding: 0.75rem; background: #f0f7ff; border-radius: 6px; border: 1px solid #007aff33;">
+                            <input type="checkbox" id="focusPell" style="margin-right: 0.75rem; width: 18px; height: 18px;">
+                            <span style="font-weight: 500; color: #007aff;">🎯 Focus on Pell Grant Student Success</span>
+                        </label>
+                        <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; line-height: 1.4;">
+                            Prioritize colleges with strong outcomes for Pell Grant recipients, emphasizing graduation rates and affordability for low-income students.
+                        </p>
+                    </div>
+
+                    <button type="submit">Get Recommendations</button>
+                </form>
+            </div>
+
+            <div class="card results">
+                <h2>Your Recommendations</h2>
+                <div id="loading">Finding your perfect matches...</div>
+                <div id="results"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tableau section - full width outside container -->
+    <div class="tableau-wrapper">
+        <div class="card tableau-section">
+            <h2>📊 Interactive Dashboards</h2>
+            <p>Explore your recommendations visually with maps and charts</p>
+            
+            <!-- Dashboard 1: Map & Distribution -->
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: #1a1a1a; font-size: 1.25rem; margin-bottom: 0.5rem;">📍 College Map & Distribution</h3>
+                <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">Geographical overview of your recommendations</p>
+                <iframe 
+                    id="tableau-dashboard-1"
+                    src="https://public.tableau.com/views/ProccessedBook/Dashboard1?:language=en-US&:embed=y&:display_count=n&:showVizHome=no"
+                    width="100%"
+                    height="900px"
+                    frameborder="0"
+                    style="border: none;">
+                </iframe>
+            </div>
+            
+            <!-- Dashboard 2: Your Top N Analysis -->
+            <div>
+                <h3 style="color: #1a1a1a; font-size: 1.25rem; margin-bottom: 0.5rem;">📊 Your Top N Analysis</h3>
+                <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">
+                    Detailed breakdown of <strong>your specified top N</strong> colleges:<br>
+                    • <strong>Ranking Bar Chart</strong> – Final match scores sorted by rank (colored by region)<br>
+                    • <strong>MSI Community Breakdown</strong> – Which schools serve minority communities?<br>
+                    • <strong>At-a-Glance Comparison</strong> – Net Price, Grad Rate, and Retention side-by-side
+                </p>
+                <iframe 
+                    id="tableau-dashboard-2"
+                    src="https://public.tableau.com/views/ProccessedBook/Dashboard2?:language=en-US&:embed=y&:display_count=n&:showVizHome=no"
+                    width="100%"
+                    height="900px"
+                    frameborder="0"
+                    style="border: none;">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
