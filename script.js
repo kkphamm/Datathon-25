@@ -267,7 +267,7 @@ function hideTableauLoading() {
  * So we'll just reload the dashboards and let them show all data
  */
 function updateTableauDashboards(topColleges, allColleges) {
-    if (!topColleges || topColleges.length === 0) {
+    if (!topColleges) {
         console.log('⚠️ No colleges to display');
         return;
     }
@@ -276,49 +276,49 @@ function updateTableauDashboards(topColleges, allColleges) {
     console.log(`  → Your results: ${topColleges.length} colleges`);
     console.log(`  → Extended data: ${allColleges.length} colleges`);
     
-    // Note: We're refreshing the iframes to reload the dashboards
-    // The dashboards will show all data, but you can manually interact with them
-    // URL filtering has length limits that prevent us from filtering 100+ colleges
-    
+    // Define the base URLs with refresh parameters
     const dashboard1BaseUrl = `${baseDashboard1Url}?:language=en-US&:embed=y&:display_count=n&:showVizHome=no&:refresh=yes`;
     const dashboard2BaseUrl = `${baseDashboard2Url}?:language=en-US&:embed=y&:display_count=n&:showVizHome=no&:refresh=yes`;
-    
-    // For Dashboard 2, if we have a small number of colleges (≤20), try URL filtering
-    if (topColleges.length <= 20) {
+    let finalUrl1 = dashboard1BaseUrl;
+    let finalUrl2 = dashboard2BaseUrl;
+    // Check if we can and should apply a URL filter (e.g., <= 20 colleges is safe)
+    if (topColleges.length > 0 && topColleges.length <= 20) {
         try {
             const topNNames = topColleges.map(c => c['Institution Name']);
             const filterValue = topNNames.join(',');
-            const filterUrl = `${baseDashboard2Url}?Institution%20Name=${encodeURIComponent(filterValue)}&:language=en-US&:embed=y&:display_count=n&:showVizHome=no`;
             
+            // Create filter URLs for *both* dashboards
+            const filterUrl1 = `${baseDashboard1Url}?Institution%20Name=${encodeURIComponent(filterValue)}&:language=en-US&:embed=y&:display_count=n&:showVizHome=no`;
+            const filterUrl2 = `${baseDashboard2Url}?Institution%20Name=${encodeURIComponent(filterValue)}&:language=en-US&:embed=y&:display_count=n&:showVizHome=no`;
             // Check URL length (most browsers support ~2000 chars)
-            if (filterUrl.length < 2000) {
-                console.log(`  ✓ Dashboard 2: Applying URL filter for ${topColleges.length} colleges`);
-                if (tableauDashboard2()) {
-                    tableauDashboard2().src = filterUrl;
-                }
+            if (filterUrl1.length < 2000 && filterUrl2.length < 2000) {
+                console.log(`  ✓ Applying URL filter for ${topColleges.length} colleges to BOTH dashboards.`);
+                finalUrl1 = filterUrl1;
+                finalUrl2 = filterUrl2;
             } else {
-                console.log(`  ⚠️ Dashboard 2: URL too long (${filterUrl.length} chars), using base URL`);
-                if (tableauDashboard2()) {
-                    tableauDashboard2().src = dashboard2BaseUrl;
-                }
+                console.log(`  ⚠️ URL too long (${filterUrl1.length} chars), loading base dashboards.`);
+                // finalUrl1 and finalUrl2 are already set to base URLs
             }
         } catch (error) {
-            console.error('  ✗ Error building Dashboard 2 URL:', error);
-            if (tableauDashboard2()) {
-                tableauDashboard2().src = dashboard2BaseUrl;
-            }
+            console.error('  ✗ Error building dashboard URLs, loading base dashboards:', error);
+            // finalUrl1 and finalUrl2 are already set to base URLs
         }
+    } else if (topColleges.length === 0) {
+        console.log('  ℹ️ No results to filter on, loading base dashboards.');
+        // finalUrl1 and finalUrl2 are already set to base URLs
     } else {
-        console.log(`  ℹ️ Dashboard 2: Too many colleges (${topColleges.length}) for URL filtering, using base URL`);
-        if (tableauDashboard2()) {
-            tableauDashboard2().src = dashboard2BaseUrl;
-        }
+        // Too many colleges for URL filtering
+        console.log(`  ℹ️ Too many colleges (${topColleges.length}) for URL filtering, loading base dashboards.`);
+        // finalUrl1 and finalUrl2 are already set to base URLs
     }
     
-    // Dashboard 1: Always use base URL (too many colleges to filter via URL)
-    console.log('  ✓ Dashboard 1: Refreshing map view');
+    // Set the .src property for both iframes
     if (tableauDashboard1()) {
-        tableauDashboard1().src = dashboard1BaseUrl;
+        tableauDashboard1().src = finalUrl1;
+    }
+    
+    if (tableauDashboard2()) {
+        tableauDashboard2().src = finalUrl2;
     }
     
     console.log('✅ Tableau dashboards refreshed!');
