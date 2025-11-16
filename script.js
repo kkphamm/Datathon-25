@@ -215,7 +215,13 @@ function displayResults(colleges) {
                     <div class="stat-value">${(college['Percent of First-Time, Full-Time Undergraduates Awarded Pell Grants'] || 0).toFixed(1)}%</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-label">Match Score</div>
+                    <div class="stat-label">
+                        Match Score
+                        <span class="tooltip-container">
+                            <span class="info-icon">i</span>
+                            <span class="tooltip">Personalized match based on your preferences (100% = best fit)</span>
+                        </span>
+                    </div>
                     <div class="stat-value" style="color: #007aff;">${toPercentage(college.HybridScore)}%</div>
                 </div>
             </div>
