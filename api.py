@@ -271,5 +271,9 @@ def health_check():
     return jsonify({"status": "healthy"})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Use PORT from environment variable (for deployment) or default to 5000 (for local dev)
+    port = int(os.environ.get('PORT', 5000))
+    # Set debug=False in production (when PORT env var is set)
+    debug = os.environ.get('PORT') is None
+    app.run(debug=debug, host='0.0.0.0', port=port)
 

@@ -11,11 +11,11 @@ ENV/
 dist/
 build/
 
-# Data files
-*.csv
+# Data files (DO NOT ignore processed_data/merged_dataset.csv - it's required!)
+data/*.csv
 *.hyper
 outputs/
-processed_data/*.csv
+# Keep processed_data/merged_dataset.csv in repo!
 
 # IDE
 .vscode/
